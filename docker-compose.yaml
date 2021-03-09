@@ -1,19 +1,18 @@
 version: "3.7"
 services:
+
   db:
-    image: mysql:8.0.19
-    command: '--default-authentication-plugin=mysql_native_password'
+    build: db
     restart: always
     secrets:
       - db-password
     volumes:
-      - db-data:/var/lib/mysql
+      - db-data:/opt/app/postgres/data
     networks:
       - backend-network
     environment:
-      - MYSQL_DATABASE=example
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
-  
+      - PGDATABASE=pgdb
+
   app:
     build: app
     restart: always
@@ -32,11 +31,14 @@ services:
       - 80:80
     networks:
       - frontend-network
+
 volumes:
   db-data:
+
 secrets:
   db-password:
     file: db/password.txt
+
 networks:
   backend-network:
   frontend-network:
