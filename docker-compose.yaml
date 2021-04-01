@@ -1,17 +1,20 @@
 version: "3.7"
 services:
 
-  db:
-    build: db
-    restart: always
-    secrets:
-      - db-password
-    volumes:
-      - db-data:/opt/app/postgres/data
-    networks:
-      - backend-network
-    environment:
-      - PGDATABASE=pgdb
+#   db:
+#     build: db
+#     restart: always
+#     secrets:
+#       - db-password
+#     volumes:
+#       - db-data:/opt/app/postgres/data
+#     networks:
+#       - backend-network
+#     #  Expose the Postgres port for development, not production
+#     ports:
+#       - 5432:5432
+#     environment:
+#       - PGDATABASE=pgdb
 
   app:
     build: app
@@ -32,8 +35,8 @@ services:
     networks:
       - frontend-network
 
-volumes:
-  db-data:
+# volumes:
+#   db-data:
 
 secrets:
   db-password:

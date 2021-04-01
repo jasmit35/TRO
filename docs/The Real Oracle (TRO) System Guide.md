@@ -74,3 +74,21 @@ Check the logs of a container:
 `docker-compose logs app`
 
 
+## Build the database in the container
+
+Copy the code needed into the /tmp directory within the container:
+
+`for file in *.sh; do  docker cp ${file} 7f7e4c05ed60:/tmp; done`
+
+`for file in *.sql; do  docker cp ${file} 7f7e4c05ed60:/tmp; done`
+
+Execute the code within the container itself:
+
+`docker exec 7f7e4c05ed60 /bin/bash -c '/tmp/run_sql.sh /tmp/build_initial_db_part1.sql postgres postgres'`
+
+`docker exec 7f7e4c05ed60 /bin/bash -c '/tmp/run_sql.sh /tmp/build_initial_db_part2.sql tro tro'`
+
+You can ignore the NOTICE: messages from the table creation scripts. They are caused by using 'create or replace' syntax.
+
+
+

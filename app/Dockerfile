@@ -13,7 +13,6 @@ RUN pip install -r requirements.txt
 #  Copy all the contents of the local src directory to the container 
 COPY ./src /code
 
-
 EXPOSE 5000
+
 CMD python server.py
- 
