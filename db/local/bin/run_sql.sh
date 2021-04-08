@@ -18,7 +18,7 @@ if [ "${database}" == "" ] ; then
     database="tro"
 fi
 
-cd /tmp
+cd /opt/app/tro/local/sql
 
 psql --host localhost --dbname ${database} --username ${user_id} -a -f ${sql_file}  >${sql_file}.log
 
