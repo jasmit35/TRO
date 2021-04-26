@@ -3,8 +3,8 @@ DROP TABLE IF EXISTS categories CASCADE;
 CREATE TABLE categories (
     category_id       	SERIAL PRIMARY KEY,
     category_name       VARCHAR NOT NULL UNIQUE,
-    category_type_fk  	INTEGER NOT NULL,
-    category_group_fk 	INTEGER NOT NULL
+    category_type_fk  	INTEGER NOT NULL DEFAULT 0,
+    category_group_fk 	INTEGER NOT NULL DEFAULT 0
 );
 
 ALTER TABLE categories 
@@ -19,4 +19,4 @@ FOREIGN KEY (category_group_fk)
 REFERENCES category_groups(category_group_id)
 ON DELETE RESTRICT;
 
-insert into categories values (0, 'Unknown', 0, 0)
+insert into categories values (0, 'Unknown')

@@ -1,13 +1,17 @@
 # The Real Oracle (TRO) System Guide
 ## Building the database
-Building the initial database
-Change to the sql directory:
 
-`cd .../TRO/local/sql`
+Change to the project directory:
 
-Use the run_sql.sh script to execute the first part of the setup using the postgres database user ID:
+`cd ~/${ENVIRONMENT}/TRO`
 
-`./run_sql.sh build_initial_db_part1.sql postgres postgres`
+Use the Makefile to build the directory structure and push the shell and sql scripts to the container:
+
+`make db-build-dirs`
+
+Use the Makefile to execute the first part of the setup using the postgres database user ID:
+
+`make db-run-part1`
 
 Check the log file and correct any errors.
 

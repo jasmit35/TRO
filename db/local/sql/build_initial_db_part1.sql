@@ -1,12 +1,13 @@
 
 --  
 
-CREATE DATABASE tro;
+CREATE DATABASE :environment;
 
+\c :environment
 
 --  Set up the user IDs. 
 
-CREATE USER js8335 ENCRYPTED PASSWORD 'devl';
+CREATE USER jeff ENCRYPTED PASSWORD 'jeff';
 
-CREATE USER tro ENCRYPTED PASSWORD 'trotest';
+CREATE USER tro ENCRYPTED PASSWORD 'tro';
 

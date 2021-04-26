@@ -20,6 +20,6 @@ fi
 
 cd /opt/app/tro/local/sql
 
-psql --host localhost --dbname ${database} --username ${user_id} -a -f ${sql_file}  >${sql_file}.log
+psql --set=environment="${ENVIRONMENT}" --host localhost --dbname ${database} --username ${user_id} -a -f ${sql_file}  >${sql_file}.log
 
 

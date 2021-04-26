@@ -1,4 +1,6 @@
-DROP TABLE IF EXISTS accounts CASCADE;
+DROP TABLE IF EXISTS tro.accounts CASCADE;
+
+CREATE PUBLIC SYNONYM accounts FOR tro.accounts;
 
 CREATE TABLE accounts (
     account_id  	SERIAL PRIMARY KEY,

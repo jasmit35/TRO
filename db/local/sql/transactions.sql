@@ -6,7 +6,7 @@ CREATE TABLE transactions (
     transaction_date		TIMESTAMP NOT NULL,
     obsolete_date		TIMESTAMP,
     category_fk			INTEGER NOT NULL,
-    amount			NUMERIC(12, 4),
+    amount			NUMERIC(12, 2),
     cleared			CHAR(1),
     number			VARCHAR,
     tag				VARCHAR,
