@@ -16,7 +16,7 @@ db-run-part1:
 	docker exec -it ${DB_CONTAINER} bash -c '${TRO_HOME}/local/bin/run_sql.sh ${TRO_HOME}/local/sql/build_initial_db_part1.sql postgres postgres'
 
 db-run-part2:
-	docker exec -it ${DB_CONTAINER} bash -c '${TRO_HOME}/local/bin/run_sql.sh ${TRO_HOME}/local/sql/build_initial_db_part2.sql'
+	docker exec -it ${DB_CONTAINER} bash -c '${TRO_HOME}/local/bin/run_sql.sh ${TRO_HOME}/local/sql/build_initial_db_part2.sql postgres ${ENVIRONMENT}'
 
 db-exec:
 	docker exec -it ${DB_CONTAINER} /bin/bash 
@@ -25,7 +25,7 @@ db-psql:
 	psql -h localhost -p 5432 -d tro -U postgres
 
 db-list-all:
-	psql -h localhost -p 5432 -d postgres -U postgres -c '\l' -c '\du'
+	psql -h localhost -p 5432 -d ${ENVIRONMENT} -U postgres -c 'set SEARCH_PATH to ''tro, public''' -c '\l' -c '\du' -c '\dn' -c '\dt'
 
 db-reset-all:
 	docker exec -it ${DB_CONTAINER} bash -c 'rm -rf ${TRO_HOME}/local'

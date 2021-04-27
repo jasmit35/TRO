@@ -1,3 +1,6 @@
+ 
+SET SEARCH_PATH TO 'tro';
+
 DROP TABLE IF EXISTS transactions CASCADE;
 
 CREATE TABLE transactions (

@@ -1,3 +1,5 @@
+SET SEARCH_PATH TO 'tro';
+
 DROP TABLE IF EXISTS category_types CASCADE;
 
 CREATE TABLE category_types (

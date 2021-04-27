@@ -13,17 +13,20 @@ Use the Makefile to execute the first part of the setup using the postgres datab
 
 `make db-run-part1`
 
-Check the log file and correct any errors.
+Check that the objects were created:
 
-`view build_initial_db_part1.sql.log`
+`make db-list-all`
 
-Use the run_sql script to execute the second part of the setup using the TRO database and user ID:
+Use the Makefile to execute the second part of the setup:
 
-`./run_sql.sh build_initial_db_part2.sql tro tro`
+`make db-run-part2`
 
-Check the log file and correct any errors.
+Check that the objects were created:
 
-`view build_initial_db_part2.sql.log`
+`make db-list-all`
+
+
+
 
 
 ## Steps to upgrade Test and Prod environments to a new version.
