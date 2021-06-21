@@ -41,3 +41,15 @@ db-test:
 # tr-up:
 # 	cd /Users/jeff/devl/TRO
 # 	docker-compose up -d
+
+build-ddl:
+	docker-compose build
+
+run-ddl:
+	docker run -it tro_ddl bash
+
+ps:
+	docker-compose ps
+
+rm:
+	docker-compose rm tro-ddl
