@@ -3,6 +3,7 @@ services:
 
   ddl:
     build: ddl 
+    container_name: tro_ddl
     restart: "no"
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
@@ -11,7 +12,7 @@ services:
     networks:
       - pgpods-network 
     volumes:
-      - /Users/Jeff/devl/trorpts/local/rpt/:/home/container/trorpts/local/rpt/
+      - /Users/Jeff/devl/tro/local/log/:/home/container/tro/local/log/
 
 secrets:
   db-password:

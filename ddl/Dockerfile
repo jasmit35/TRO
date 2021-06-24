@@ -1,14 +1,16 @@
-FROM debian:buster-slim
+FROM python:3.9-slim-buster
+ARG ENVIRONMENT
 
 COPY install-packages.sh .
 RUN ./install-packages.sh
 
-RUN useradd -m -d /home/container -u 5000 container
-RUN chown -R container /home/container 
-USER container
 WORKDIR /home/container/tro
-
 COPY ./src .
+COPY ./src/local/bin/"$ENVIRONMENT"_bash_profile ../.bash_profile
+RUN useradd -d /home/container -u 5000 container
+RUN chown -R container.container /home/container 
+USER container
 
-# CMD [ "python", "-u", "./local/python/trorpts.py", "-e", "devl" ]
-# CMD [ "/bin/bash", "sleep", "1800" ]
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+CMD [ "python", "-u", "./local/python/main.py" ]

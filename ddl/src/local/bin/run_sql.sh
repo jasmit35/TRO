@@ -18,8 +18,8 @@ if [ "${database}" == "" ] ; then
     database="tro"
 fi
 
-cd /opt/app/tro/local/sql
+# cd /opt/app/tro/local/sql
 
-psql --set=environment="${ENVIRONMENT}" --host localhost --dbname ${database} --username ${user_id} -a -f ${sql_file}  >${sql_file}.log
+psql --set=environment="${ENVIRONMENT}" --host=pgpods-server --dbname=${database} --username=${user_id} -a -f ${sql_file}  
 
 
