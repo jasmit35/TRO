@@ -30,6 +30,9 @@ Check that the objects were created:
 
 
 ## Steps to upgrade Test and Prod environments to a new version.
+Run auto-update as usual.
+
+`auto-update -e test
 
 Change to the sql directory:
 
