@@ -32,7 +32,27 @@ Check that the objects were created:
 ## Steps to upgrade Test and Prod environments to a new version.
 Run auto-update as usual.
 
-`auto-update -e test
+`auto-update -e test -a tro`
+
+Use the Makefile to build a new image and run it.
+
+`cd ~/test/tro`
+
+`make build-full`
+
+`make run`
+
+Exec into the running container via the Makefile.
+
+`make exec`
+
+Use the Makefile within the container to build the schema.
+
+`make run-build-part1`
+
+
+
+
 
 Change to the sql directory:
 
