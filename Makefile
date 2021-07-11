@@ -55,7 +55,7 @@ build:
 	docker-compose --file=${DCYAML} build --build-arg ENVIRONMENT=${ENV}
 
 build-full:
-	docker-compose --file=${DCYAML} build --pull --no-cache
+	docker-compose --file=${DCYAML} build --pull --no-cache -build-arg ENVIRONMENT=${ENV}
 
 run:
 	docker-compose --file=${DCYAML} up -d
