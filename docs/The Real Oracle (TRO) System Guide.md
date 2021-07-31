@@ -50,23 +50,11 @@ Use the Makefile within the container to build the schema.
 
 `make run-build-part1`
 
+`make create_tables`
+
+`make grant_privs`
 
 
-
-
-Change to the sql directory:
-
-`cd .../TRO/local/sql`
-
-Use the run_sql.sh script to execute the first part of the setup using the postgres database user ID:
-
-`run_sql.sh build_initial_db_part1.sql postgres postgres`
-
-Check the log file and correct any errors.
-
-Use the run_sql script to execute the second part of the setup using the TRO database and user ID:
-
-`run_sql.sh build_initial_db_part2.sql tro tro`
 
 ## Docker commands
 Build the image from the docker fiie:
