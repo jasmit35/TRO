@@ -30,31 +30,20 @@ Check that the objects were created:
 
 
 ## Steps to upgrade Test and Prod environments to a new version.
-Run auto-update as usual.
 
-`auto-update -e test -a tro`
+Change to the sql directory:
 
-Use the Makefile to build a new image and run it.
+`cd .../TRO/local/sql`
 
-`cd ~/test/tro`
+Use the run_sql.sh script to execute the first part of the setup using the postgres database user ID:
 
-`make build-full`
+`run_sql.sh build_initial_db_part1.sql postgres postgres`
 
-`make run`
+Check the log file and correct any errors.
 
-Exec into the running container via the Makefile.
+Use the run_sql script to execute the second part of the setup using the TRO database and user ID:
 
-`make exec`
-
-Use the Makefile within the container to build the schema.
-
-`make run-build-part1`
-
-`make create_tables`
-
-`make grant_privs`
-
-
+`run_sql.sh build_initial_db_part2.sql tro tro`
 
 ## Docker commands
 Build the image from the docker fiie:
