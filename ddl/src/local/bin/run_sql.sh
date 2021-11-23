@@ -20,6 +20,7 @@ fi
 
 # cd /opt/app/tro/local/sql
 
-psql --set=environment="${ENVIRONMENT}" --host=pgpods-server --dbname=${database} --username=${user_id} -a -f ${sql_file}  
+# psql --set=environment="${ENVIRONMENT}" --host=pgpods-server --dbname=${database} --username=${user_id} -a -f ${sql_file}  
+psql --set=environment="${ENVIRONMENT}" --host=localhost --dbname=${database} --username=${user_id} -a -f ${sql_file}  
 
 
