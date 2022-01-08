@@ -17,7 +17,6 @@ class Transaction:
     description: str = ""
     memo: str = ""
     tax_item: str = ""
-    obsolete_date: datetime.date = None
 
 
 class TransactionsTable:
@@ -68,6 +67,7 @@ class TransactionsTable:
             cursor.execute(sql, (start_date, end_date))
             return cursor.fetchall()
 
+#   -----------------------------------------------------------------------------
     def select_date_range_summary(self, start_date, end_date):
         sql = """
             SELECT account_name,
@@ -84,17 +84,29 @@ class TransactionsTable:
             cursor.execute(sql, (start_date, end_date))
             return cursor.fetchall()
 
+#   -----------------------------------------------------------------------------
+    # def mark_tranactions_obsolete(self, start_date, end_date):
+    #     todays_date = datetime.date.today()
+    #     sql = """
+    #         update tro.transactions
+    #         set obsolete_date = %s
+    #         where transaction_date >= %s
+    #         and transaction_date <= %s
+    #     """
+    #     with self.db_conn.cursor() as cursor:
+    #         cursor.execute(sql, (todays_date, start_date, end_date))
+
     def mark_tranactions_obsolete(self, start_date, end_date):
-        todays_date = datetime.date.today()
         sql = """
-            update tro.transactions
-            set obsolete_date = %s
-            where transaction_date >= %s
-            and transaction_date <= %s
+        DELETE FROM tro.transactions
+        WHERE transaction_date >= %s
+        AND transaction_date <= %s
         """
         with self.db_conn.cursor() as cursor:
-            cursor.execute(sql, (todays_date, start_date, end_date))
+            cursor.execute(sql, (start_date, end_date))
+            return cursor.rowcount
 
+#   -----------------------------------------------------------------------------
     def get_transaction_id(self, account_id, transaction_date, category_id, amount):
         sql = """
         select transaction_id
@@ -130,8 +142,7 @@ class TransactionsTable:
 
         sql = """
             update tro.transactions
-            set obsolete_date = null,
-            cleared = %s,
+            set cleared = %s,
             number = %s,
             tag = %s,
             description = %s,
