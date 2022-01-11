@@ -36,7 +36,7 @@ class AccountsTable:
             account_id = self.select_id(account_name)
             if account_id is None:
                 account_id = self.insert_name(account_name)
-            self.known_accounts[account_name] = account_id
+            self.existing_accounts[account_name] = account_id
         return account_id
 
     #  ----------------------------------------------------------------------
