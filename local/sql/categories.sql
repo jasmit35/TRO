@@ -19,4 +19,6 @@ FOREIGN KEY (category_group_fk)
 REFERENCES tro.category_groups(category_group_id)
 ON DELETE RESTRICT;
 
-insert into tro.categories values (0, 'Unknown')
+GRANT SELECT, INSERT, UPDATE, DELETE ON tro.categories TO tro_rw;
+GRANT SELECT ON tro.categories TO tro_ro;
+

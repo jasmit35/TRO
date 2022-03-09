@@ -5,6 +5,9 @@ CREATE TABLE tro.category_groups (
     category_group      VARCHAR NOT NULL 
 );
 
+GRANT SELECT, INSERT, UPDATE, DELETE ON tro.category_groups TO tro_rw;
+GRANT SELECT ON tro.category_groups TO tro_ro;
+
 INSERT INTO tro.category_groups VALUES (0, 'Unknown');
 INSERT INTO tro.category_groups VALUES (1, 'personal expenses');
 INSERT INTO tro.category_groups VALUES (2, 'personal income');

@@ -5,6 +5,14 @@ import datetime
 from dataclasses import dataclass
 
 
+class InvalidTransactionException(Exception):
+    def __init__(self, transaction, message):
+        self.transaction = transaction
+        self.message = message
+        print(message)
+        print(transaction)
+
+
 @dataclass
 class Transaction:
     account_fk: int
@@ -82,6 +90,21 @@ class TransactionsTable:
         """
         with self.db_conn.cursor() as cursor:
             cursor.execute(sql, (start_date, end_date))
+            return cursor.fetchall()
+
+#   -----------------------------------------------------------------------------
+    def select_ending_balances(self, end_date):
+        sql = """
+            SELECT account_name,
+                sum(amount)
+            FROM tro.accounts, tro.transactions
+            WHERE account_id = account_fk
+            AND transaction_date <= %s
+            GROUP BY account_name
+            ORDER BY 1
+        """
+        with self.db_conn.cursor() as cursor:
+            cursor.execute(sql, (end_date, ))
             return cursor.fetchall()
 
 #   -----------------------------------------------------------------------------

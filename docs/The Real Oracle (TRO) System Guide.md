@@ -99,3 +99,28 @@ You can ignore the NOTICE: messages from the table creation scripts. They are ca
 
 
 
+# Version 2.1 #
+## Build in test without a container
+
+`auto-update -a tro -e test`
+
+Clean all the resources for TRO (only) out of the database.
+
+`cd ~/test/tro/local/sql`
+
+`psql -d test -U tro`
+
+`\i drop_all_tables.sql`
+
+`\q`
+
+`psql -d test -U postgres`
+
+`\i drop_owner.sql`
+
+
+
+
+
+
+

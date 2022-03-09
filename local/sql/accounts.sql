@@ -5,5 +5,6 @@ CREATE TABLE tro.accounts (
     account_name	VARCHAR NOT NULL 
 );
 
-INSERT INTO accounts VALUES (1, 'checking');
+GRANT SELECT, INSERT, UPDATE, DELETE ON tro.accounts TO tro_rw;
+GRANT SELECT  ON tro.accounts TO tro_ro;
 

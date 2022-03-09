@@ -19,6 +19,6 @@ INSERT INTO tro.transactions (account_fk, category_fk, transaction_date, amount)
 INSERT INTO tro.transactions (account_fk, category_fk, transaction_date, amount) VALUES (17, 1, '01/12/1960', 8785.00); 
 INSERT INTO tro.transactions (account_fk, category_fk, transaction_date, amount) VALUES (18, 1, '01/12/1960', 25000.00); 
 INSERT INTO tro.transactions (account_fk, category_fk, transaction_date, amount) VALUES (19, 1, '01/12/1960', 0); 
-INSERT INTO tro.transactions (account_fk, category_fk, transaction_date, amount) VALUES (20, 1, '01/12/1960', 17693.55); 
+INSERT INTO tro.transactions (account_fk, category_fk, transaction_date, amount) VALUES (20, 1, '01/12/1960', 17269.46); 
 INSERT INTO tro.transactions (account_fk, category_fk, transaction_date, amount) VALUES (21, 1, '01/12/1960', 0); 
 --

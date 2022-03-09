@@ -20,7 +20,7 @@ INSERT INTO tro.accounts VALUES (16, 'IRA FI Tammy Roll');
 INSERT INTO tro.accounts VALUES (17, 'Ford Fusion');
 INSERT INTO tro.accounts VALUES (18, 'Subaru Outback');
 INSERT INTO tro.accounts VALUES (19, 'IRA FI Tammy Roth');
-INSERT INTO tro.accounts VALUES (20, 'Optium HSA');
+INSERT INTO tro.accounts VALUES (20, 'Optum HSA');
 INSERT INTO tro.accounts VALUES (21, 'Vanguard Brokerage');
 ALTER SEQUENCE tro.accounts_account_id_seq RESTART WITH 22;
 --
