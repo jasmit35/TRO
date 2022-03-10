@@ -1,0 +1,5 @@
+--
+CREATE SCHEMA tro;
+
+GRANT ALL PRIVILEGES ON SCHEMA tro TO tro;
+

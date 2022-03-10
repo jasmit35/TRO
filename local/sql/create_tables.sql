@@ -1,3 +1,4 @@
+--
 
 \i local/sql/category_types.sql
 \i local/sql/category_groups.sql
