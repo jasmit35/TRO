@@ -21,4 +21,4 @@ ON DELETE RESTRICT;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tro.categories TO tro_rw;
 GRANT SELECT ON tro.categories TO tro_ro;
-
+GRANT ALL PRIVILEGES ON SEQUENCE tro.categories_category_id_seq TO tro_rw;

@@ -132,6 +132,23 @@ Create the schema then the tables using the approate id:
 
 `\i create_tables.sql`
 
+## Load and validate the data
+
+Load the startup data:
+
+`psql -d test -U tro -f set_start.sql`
+
+Load the data for the first quarter of 2020:
+
+Run the report and validate the load was successful:
+
+Load the remainder of the 2020 data and validate:
+
+Load the remainder of the data:
+
+
+
+
 
 
 

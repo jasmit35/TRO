@@ -1,7 +1,7 @@
 
-DROP TABLE IF EXISTS transactions CASCADE;
+DROP TABLE IF EXISTS tro.transactions CASCADE;
 
-CREATE TABLE transactions (
+CREATE TABLE tro.transactions (
     transaction_id       	SERIAL PRIMARY KEY,
     account_fk			INTEGER NOT NULL,
     transaction_date		TIMESTAMP NOT NULL,
@@ -15,18 +15,20 @@ CREATE TABLE transactions (
     tax_item			VARCHAR
 );
 
-ALTER TABLE transactions 
+ALTER TABLE tro.transactions 
 ADD CONSTRAINT account_fk
 FOREIGN KEY (account_fk)
-REFERENCES accounts(account_id)
+REFERENCES tro.accounts(account_id)
 ON DELETE RESTRICT;
 
-ALTER TABLE transactions 
+ALTER TABLE tro.transactions 
 ADD CONSTRAINT category_fk
 FOREIGN KEY (category_fk)
-REFERENCES categories(category_id)
+REFERENCES tro.categories(category_id)
 ON DELETE RESTRICT;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tro.transactions TO tro_rw;
+GRANT ALL PRIVILEGES ON tro.transactions TO tro_rw;
+GRANT ALL PRIVILEGES ON SEQUENCE tro.transactions_transaction_id_seq TO tro_rw;
+
 GRANT SELECT ON tro.transactions TO tro_ro;
 
