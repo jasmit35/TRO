@@ -1,3 +1,5 @@
+\o categories.log
+
 DROP TABLE IF EXISTS tro.categories CASCADE;
 
 CREATE TABLE tro.categories (

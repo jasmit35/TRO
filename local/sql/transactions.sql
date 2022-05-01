@@ -1,3 +1,4 @@
+\o transactions.log
 
 DROP TABLE IF EXISTS tro.transactions CASCADE;
 

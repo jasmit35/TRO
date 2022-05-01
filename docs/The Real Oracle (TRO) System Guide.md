@@ -1,9 +1,42 @@
 # The Real Oracle (TRO) System Guide
 ## Building the database
 
-Change to the project directory:
+### Development
 
-`cd ~/${ENVIRONMENT}/TRO`
+Use the kcpcc (kubectl print current context) alias to insure you are pointing to the devl environment:
+
+```
+kcpcc
+```
+*devl*
+
+Sign into psql to make sure you are pointing to the correct database:
+
+```
+psql -U postgres -h localhost -p 5430
+\l
+\q
+```
+
+Change to the project's sql directory:
+
+`cd ~/devl/TRO/local/sql`
+
+Use the Makefile to build the database:
+
+`make create-database`
+
+Then users and privilages:
+
+```
+make create-users
+make create-privs
+```
+
+
+
+
+
 
 Use the Makefile to build the directory structure and push the shell and sql scripts to the container:
 

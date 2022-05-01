@@ -1,8 +1,8 @@
-version: "3.7"
+version: "3"
 services:
 
   ddl:
-    build: ddl 
+    build: ./ddl 
     container_name: tro_ddl
     restart: "no"
     environment:
@@ -14,6 +14,23 @@ services:
     volumes:
       - /Users/Jeff/devl/tro/local/log/:/home/container/tro/local/log/
 
+  flask_app:
+    build: ./flask_app
+    container_name: flask_app
+    restart: always
+    ports:
+      - "8000:8000"
+    command: gunicorn -w 1 -b 0.0.0.0:8000 wsgi:server
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - flask_app
+
 secrets:
   db-password:
     file: ./.secrets-db-password
@@ -21,5 +38,4 @@ secrets:
 networks:
   pgpods-network:
     external: true
-    
     

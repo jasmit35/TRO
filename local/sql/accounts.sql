@@ -1,3 +1,5 @@
+\o accounts.log
+
 DROP TABLE IF EXISTS tro.accounts CASCADE;
 
 CREATE TABLE tro.accounts (

@@ -1,3 +1,5 @@
+\o category_groups.log
+
 DROP TABLE IF EXISTS tro.category_groups CASCADE;
 
 CREATE TABLE tro.category_groups (
