@@ -12,7 +12,7 @@ create-database:
 ########################################################################################################################
 
 create-schema:
-	$(shell psql -h localhost -p 5430 -U postgres -f create_schema.sql)
+	$(shell psql -h localhost -p 5430 -U postgres -d ${ENVIRONMENT} -f create_schema.sql)
 
 
 ########################################################################################################################
@@ -24,20 +24,28 @@ create-users:
 ########################################################################################################################
 
 create-privs:
-	$(shell psql -h localhost -p 5430 -U postgres -f create_privs.sql)
+	$(shell psql -h localhost -p 5430 -U postgres -d ${ENVIRONMENT} -f create_privs.sql)
 
 
 ########################################################################################################################
 
 create-tables:
-	$(shell psql -h localhost -p 5430 -U postgres -f accounts_types.sql)
-	$(shell psql -h localhost -p 5430 -U postgres -f category_types.sql)
-	$(shell psql -h localhost -p 5430 -U postgres -f category_groups.sql)
-	$(shell psql -h localhost -p 5430 -U postgres -f categories.sql)
-	$(shell psql -h localhost -p 5430 -U postgres -f transactions_tables.sql)
+	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f accounts.sql
+	view accounts.log
+	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f category_types.sql
+	view category_types.log
+	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f category_groups.sql
+	view category_groups.log
+	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f categories.sql
+	view categories.log
+	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f transactions.sql
+	view transactions.log
 
 
 ########################################################################################################################
+
+list-all:
+	psql -h localhost -p 5430 -d ${ENVIRONMENT} -U postgres -c 'set SEARCH_PATH to ''tro, public''' -c '\l' -c '\du' -c '\dn' -c '\dt'
 
 
 
@@ -103,9 +111,6 @@ create-tables:
 # 
 # db-psql:
 # 	psql -h localhost -p 5432 -d tro -U postgres
-# 
-# db-list-all:
-# 	psql -h localhost -p 5432 -d ${ENVIRONMENT} -U postgres -c 'set SEARCH_PATH to ''tro, public''' -c '\l' -c '\du' -c '\dn' -c '\dt'
 # 
 # db-reset-all:
 # 	docker exec -it ${DB_CONTAINER} bash -c 'rm -rf ${TRO_HOME}/local'

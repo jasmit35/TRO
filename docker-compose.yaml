@@ -1,22 +1,22 @@
 version: "3"
 services:
 
-  ddl:
-    build: ./ddl 
-    container_name: tro_ddl
-    restart: "no"
-    environment:
-      - ENVIRONMENT=${ENVIRONMENT}
-    secrets:
-      - db-password
-    networks:
-      - pgpods-network 
-    volumes:
-      - /Users/Jeff/devl/tro/local/log/:/home/container/tro/local/log/
+#   ddl:
+#     build: ./ddl 
+#    container_name: tro_ddl
+#     restart: "no"
+#     environment:
+#       - ENVIRONMENT=${ENVIRONMENT}
+#     secrets:
+#       - db-password
+#     networks:
+#       - pgpods-network 
+#     volumes:
+#       - /Users/Jeff/devl/tro/local/log/:/home/container/tro/local/log/
 
   flask_app:
-    build: ./flask_app
-    container_name: flask_app
+    build: ./tro_flask_app
+    container_name: tro_flask_app
     restart: always
     ports:
       - "8000:8000"
@@ -35,7 +35,7 @@ secrets:
   db-password:
     file: ./.secrets-db-password
 
-networks:
-  pgpods-network:
-    external: true
+# networks:
+#   pgpods-network:
+#     external: true
     

@@ -6,7 +6,7 @@ RUN ./install-packages.sh
 
 WORKDIR /home/container/tro
 COPY ./src .
-COPY ./src/local/bin/"$ENVIRONMENT"_bash_profile ../.bash_profile
+# COPY ./src/local/bin/"$ENVIRONMENT"_bash_profile ../.bash_profile
 RUN useradd -d /home/container -u 5000 container
 RUN chown -R container.container /home/container 
 USER container

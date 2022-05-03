@@ -22,9 +22,12 @@ Change to the project's sql directory:
 
 `cd ~/devl/TRO/local/sql`
 
-Use the Makefile to build the database:
+Use the Makefile to build the database and schema:
 
-`make create-database`
+```
+make create-database
+make create-schema
+```
 
 Then users and privilages:
 
@@ -33,18 +36,16 @@ make create-users
 make create-privs
 ```
 
+And finallly the tables:
+
+```
+make create-tables
+```
 
 
 
 
 
-Use the Makefile to build the directory structure and push the shell and sql scripts to the container:
-
-`make db-build-dirs`
-
-Use the Makefile to execute the first part of the setup using the postgres database user ID:
-
-`make db-run-part1`
 
 Check that the objects were created:
 
