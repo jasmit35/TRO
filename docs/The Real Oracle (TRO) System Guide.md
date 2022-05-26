@@ -85,6 +85,59 @@ make create-tables
 If any changes were made, be sure to commit the code to the github repository.
 
 
+### Production
+Run the standard upgrade script:
+
+```
+auto-update -a TRO -e prod
+```
+
+
+
+
+
+
+
+
+
+Use the kcpcc (kubectl print current context) alias to insure you are pointing to the test environment:
+
+```
+kcpcc
+```
+*test*
+
+Sign into psql to make sure you are pointing to the correct database:
+
+```
+psql -h localhost -p 5432 -d postgres -U postgres 
+\l
+```
+
+Change to the project's sql directory:
+
+```
+cd ~/test/TRO/local/sql
+```
+
+Use the Makefile to build the database, users, schema and privs:
+
+```
+make create-database
+make create-users
+make create-schema
+make create-privs
+```
+
+And finallly the tables:
+
+```
+make create-tables
+```
+
+If any changes were made, be sure to commit the code to the github repository.
+
+
 
 
 
