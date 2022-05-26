@@ -1,93 +1,59 @@
-
 ########################################################################################################################
-
-.PHONY: create-database create-schema create-users create-privs create-tables
+ 
+ENV := "${ENVIRONMENT}"
+ 
+ifeq (${ENV}, "devl")
+	HOST="localhost"
+	PORT="5430"
+endif
+ 
+ifeq (${ENV}, "test")
+	HOST="localhost"
+	PORT="5432"
+endif
+ 
+ifeq (${ENV}, "prod")
+	HOST="kmaster"
+	PORT="5432"
+endif
 
 ########################################################################################################################
 
 create-database:
-	$(shell psql -h localhost -p 5430 -U postgres --variable=NEW_DBNAME=${ENVIRONMENT} -f create_database.sql)
-
-
-########################################################################################################################
-
-create-schema:
-	$(shell psql -h localhost -p 5430 -U postgres -d ${ENVIRONMENT} -f create_schema.sql)
-
-
-########################################################################################################################
+	$(shell psql -h ${HOST} -p ${PORT} -d postgres -U postgres --variable=NEW_DBNAME=${ENV} -f create_database.sql)
 
 create-users:
-	$(shell psql -h localhost -p 5430 -U postgres -f create_users.sql)
+	$(shell psql -h ${HOST} -p ${PORT} -d ${ENV} -U postgres -f create_users.sql)
 
-
-########################################################################################################################
+create-schema:
+	$(shell psql -h ${HOST} -p ${PORT} -d ${ENV} -U postgres -f create_schema.sql)
 
 create-privs:
-	$(shell psql -h localhost -p 5430 -U postgres -d ${ENVIRONMENT} -f create_privs.sql)
+	$(shell psql -h ${HOST} -p ${PORT} -d ${ENV} -U postgres -f create_privs.sql)
 
 
 ########################################################################################################################
 
 create-tables:
-	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f accounts.sql
+	psql -h ${HOST} -p ${PORT} -U tro -d ${ENV} -f accounts.sql
 	view accounts.log
-	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f category_types.sql
+	psql -h ${HOST} -p ${PORT} -U tro -d ${ENV} -f category_types.sql
 	view category_types.log
-	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f category_groups.sql
+	psql -h ${HOST} -p ${PORT} -U tro -d ${ENV} -f category_groups.sql
 	view category_groups.log
-	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f categories.sql
+	psql -h ${HOST} -p ${PORT} -U tro -d ${ENV} -f categories.sql
 	view categories.log
-	psql -h localhost -p 5430 -U tro -d ${ENVIRONMENT} -f transactions.sql
+	psql -h ${HOST} -p ${PORT} -U tro -d ${ENV} -f transactions.sql
 	view transactions.log
 
 
 ########################################################################################################################
 
 list-all:
-	psql -h localhost -p 5430 -d ${ENVIRONMENT} -U postgres -c 'set SEARCH_PATH to ''tro, public''' -c '\l' -c '\du' -c '\dn' -c '\dt'
+	psql -h ${HOST} -p ${PORT} -d ${ENV} -U postgres -c 'set SEARCH_PATH to ''tro, public''' -c '\l' -c '\du' -c '\dn' -c '\dt'
 
 
-
-
-
-
-
-
-
-# 
-# 
-# 
-# 
-# build:
-# 	docker-compose --file=${DCYAML} build --build-arg ENVIRONMENT=${ENV}
-# 
-# build-full:
-# 	docker-compose --file=${DCYAML} build --pull --no-cache -build-arg ENVIRONMENT=${ENV}
-# 
-# run:
-# 	docker-compose --file=${DCYAML} up -d
-# 	docker-compose --file=${DCYAML} ps
-# 
-# ps:
-# 	docker-compose --file=${DCYAML} ps
-# 
-# logs:
-# 	docker-compose --file=${DCYAML} logs ddl 
-# 
-# exec:
-# 	docker exec -it tro_ddl /bin/bash
-# 
-# stop:
-# 	docker-compose --file=${DCYAML} stop ddl 
-# 
-# rm:
-# 	docker-compose --file=${DCYAML} rm -fsv ddl 
-# 
-# test-run: build run logs stop rm
-# 
-# psql:
-# 	psql -h localhost -d postgres -U postgres 
+########################################################################################################################
 # 
 # 
 # 
@@ -110,30 +76,15 @@ list-all:
 # 	docker exec -it ${DB_CONTAINER} /bin/bash 
 # 
 # db-psql:
-# 	psql -h localhost -p 5432 -d tro -U postgres
+# 	psql -h ${HOST} -p 5432 -d tro -U postgres
 # 
 # db-reset-all:
 # 	docker exec -it ${DB_CONTAINER} bash -c 'rm -rf ${TRO_HOME}/local'
-# 	psql --set=environment=${ENVIRONMENT} -h localhost -p 5432 -d postgres -U postgres -c 'DROP DATABASE ${ENVIRONMENT};'
-# 	psql -h localhost -p 5432 -d postgres -U postgres -c 'DROP USER jeff;'
-# 	psql -h localhost -p 5432 -d postgres -U postgres -c 'DROP USER tro;'
+# 	psql --set=environment=${ENVIRONMENT} -h ${HOST} -p 5432 -d postgres -U postgres -c 'DROP DATABASE ${ENVIRONMENT};'
+# 	psql -h ${HOST} -p 5432 -d postgres -U postgres -c 'DROP USER jeff;'
+# 	psql -h ${HOST} -p 5432 -d postgres -U postgres -c 'DROP USER tro;'
 # 
 # db-test:
 # 	docker cp db/local/sql/ ${DB_CONTAINER}:${TRO_HOME}/local/sql
 # 
-########################################################################################################################
-# 
-# ENV := "${ENVIRONMENT}"
-# 
-# ifeq (${ENV}, "devl")
-# 	TRO_HOME := "/Users/jeff/devl/tro"
-# endif
-# 
-# ifeq (${ENV}, "test")
-# 	TRO_HOME := "/Users/jeff/test/tro"
-# endif
-# 
-# ifeq (${ENV}, "prod")
-# 	TRO_HOME := "/home/jeff/prod/tro"
-# endif
 

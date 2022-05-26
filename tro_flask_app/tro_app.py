@@ -5,6 +5,11 @@ from flask import request
 server = Flask(__name__)
 
 
+# @server.route("/")
+# def index():
+#     return "Hello world from TRO!"
+
+
 @server.route("/")
 def index():
     celsius = request.args.get("celsius", "")
@@ -30,7 +35,7 @@ def fahrenheit_from(celsius):
         return str(fahrenheit)
     except ValueError:
         return "invalid input"
-
+#
 # @server.route('/<int:celsius>')
 # def it_be_42(celsius):
 #     if celsius == 42:

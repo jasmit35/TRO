@@ -1,5 +1,5 @@
 # The Real Oracle (TRO) System Guide
-## Building the database
+## Building the initial database
 
 ### Development
 
@@ -13,14 +13,14 @@ kcpcc
 Sign into psql to make sure you are pointing to the correct database:
 
 ```
-psql -U postgres -h localhost -p 5430
+psql -h localhost -p 5430 -d postgres -U postgres 
 \l
-\q
 ```
-
 Change to the project's sql directory:
 
-`cd ~/devl/TRO/local/sql`
+```
+cd ~/devl/TRO/local/sql
+```
 
 Use the Makefile to build the database and schema:
 
@@ -28,11 +28,51 @@ Use the Makefile to build the database and schema:
 make create-database
 make create-schema
 ```
-
 Then users and privilages:
-
 ```
 make create-users
+make create-privs
+```
+And finallly the tables:
+
+```
+make create-tables
+```
+If any changes were made, be sure to commit the code to the github repository.
+
+### Test
+Run the standard upgrade script:
+
+```
+auto-update -a TRO -e test
+```
+
+Use the kcpcc (kubectl print current context) alias to insure you are pointing to the test environment:
+
+```
+kcpcc
+```
+*test*
+
+Sign into psql to make sure you are pointing to the correct database:
+
+```
+psql -h localhost -p 5432 -d postgres -U postgres 
+\l
+```
+
+Change to the project's sql directory:
+
+```
+cd ~/test/TRO/local/sql
+```
+
+Use the Makefile to build the database, users, schema and privs:
+
+```
+make create-database
+make create-users
+make create-schema
 make create-privs
 ```
 
@@ -42,42 +82,19 @@ And finallly the tables:
 make create-tables
 ```
 
+If any changes were made, be sure to commit the code to the github repository.
 
 
 
 
 
-Check that the objects were created:
-
-`make db-list-all`
-
-Use the Makefile to execute the second part of the setup:
-
-`make db-run-part2`
-
-Check that the objects were created:
-
-`make db-list-all`
 
 
 
 
 
-## Steps to upgrade Test and Prod environments to a new version.
 
-Change to the sql directory:
 
-`cd .../TRO/local/sql`
-
-Use the run_sql.sh script to execute the first part of the setup using the postgres database user ID:
-
-`run_sql.sh build_initial_db_part1.sql postgres postgres`
-
-Check the log file and correct any errors.
-
-Use the run_sql script to execute the second part of the setup using the TRO database and user ID:
-
-`run_sql.sh build_initial_db_part2.sql tro tro`
 
 ## Docker commands
 Build the image from the docker fiie:
