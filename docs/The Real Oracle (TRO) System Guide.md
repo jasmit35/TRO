@@ -89,35 +89,35 @@ If any changes were made, be sure to commit the code to the github repository.
 Run the standard upgrade script:
 
 ```
+cd ~/prod
 auto-update -a TRO -e prod
 ```
-
-
-
-
-
-
-
-
-
-Use the kcpcc (kubectl print current context) alias to insure you are pointing to the test environment:
+Use the kcpcc (kubectl print current context) alias to insure you are pointing to the Production environment:
 
 ```
 kcpcc
 ```
-*test*
+*prod*
+
+Make sure the ENVIRONMENT variable is set correctly:
+
+```
+export ENVIRONMENT=prod
+echo $ENVIRONMENT
+```
+*prod*
 
 Sign into psql to make sure you are pointing to the correct database:
 
 ```
-psql -h localhost -p 5432 -d postgres -U postgres 
+psql -h kmaster -U postgres 
 \l
+\q
 ```
-
 Change to the project's sql directory:
 
 ```
-cd ~/test/TRO/local/sql
+cd ~/prod/TRO/local/sql
 ```
 
 Use the Makefile to build the database, users, schema and privs:
@@ -134,8 +134,12 @@ And finallly the tables:
 ```
 make create-tables
 ```
+Display the objects:
 
-If any changes were made, be sure to commit the code to the github repository.
+```
+make list-all
+```
+git If any changes were made, be sure to commit the code to the github repository.
 
 
 
