@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS tro.categories CASCADE;
 
 CREATE TABLE tro.categories (
-    category_id       	SERIAL PRIMARY KEY,
+    category_id         BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,	
     category_name       VARCHAR NOT NULL UNIQUE,
     category_type_fk  	INTEGER NOT NULL DEFAULT 0,
     category_group_fk 	INTEGER NOT NULL DEFAULT 0
@@ -23,4 +23,4 @@ ON DELETE RESTRICT;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON tro.categories TO tro_rw;
 GRANT SELECT ON tro.categories TO tro_ro;
-GRANT ALL PRIVILEGES ON SEQUENCE tro.categories_category_id_seq TO tro_rw;
+-- GRANT ALL PRIVILEGES ON SEQUENCE tro.categories_category_id_seq TO tro_rw;

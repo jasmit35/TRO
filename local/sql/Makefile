@@ -4,7 +4,7 @@ ENV := "${ENVIRONMENT}"
  
 ifeq (${ENV}, "devl")
 	HOST="localhost"
-	PORT="5430"
+	PORT="5432"
 endif
  
 ifeq (${ENV}, "test")

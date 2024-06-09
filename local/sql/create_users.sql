@@ -3,7 +3,7 @@
 
 \o create_users.log
 
-CREATE USER jeff ENCRYPTED PASSWORD 'jeff';
+-- CREATE USER jeff ENCRYPTED PASSWORD 'jeff';
 
 CREATE USER tro ENCRYPTED PASSWORD 'tro';
 ALTER USER tro SET SEARCH_PATH='tro, "$user", public';

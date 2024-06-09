@@ -1,62 +1,25 @@
-"""
-categories.py - Data classes and methods for the categories table.
-"""
-
 from dataclasses import dataclass
 from logging import getLogger
-
+import os
+import sys
 from function_logger import function_logger
 
-
-@dataclass
-class CategoriesData:
-    category_id: int = 0
-    category_name: str = ""
-    category_type_fk: int = 0
-    category_group_fk: int = 0
-    _category_description: str = ""
-    _category_hidden: bool = False
-
-    def __str__(self) -> str:
-        return f"CategoriesData[{self.category_id}, '{self.category_name}', {self.category_type_fk}, \
-{self.category_group_fk}, '{self._category_description}', {self._category_hidden}]"
-
-    def __init__(self, row):
-        self._logger = getLogger()
-        # If row is a list, add 0 as the first element and convert it to a tuple
-        if row.__class__.__name__ == "list":
-            row = [0] + row
-            row = tuple(row)
-
-        self._logger.debug(f"Begin 'CategoriesData.__init__' arguments - {row}")
-        cols = len(row)
-        self.category_id = row[0]
-        self.category_name = row[1]
-        if cols > 5:
-            self._category_hidden = row[5]
-        """
-        if cols > 0 and row[0] is not None:
-            self.category_id = row[0]
-        if cols > 1 and row[1] is not None:
-            self.category_name = row[1]
-        if cols > 2:
-            self.category_type_fk = 0  # row[2]
-        if cols > 3:
-            self.category_group_fk = 0  # row[3]
-        if cols > 4 and row[4] is not None:
-            self.category_description = row[4]
-        if cols > 5:
-            self._category_hidden = row[5]
-        """
-        self._logger.debug(f"End   'CategoriesData.__init__' returns - {self}")
-        return None
+tro_code_path = os.path.abspath("../tro/local/python")
+sys.path.insert(1, tro_code_path)
+from category_data import CategoryData
 
 
 class CategoriesTable:
+    _db_conn = None
+    _logger = getLogger()
 
     def __init__(self, db_conn):
+        self._logger.info(f"Begin 'CategoriesTable.__init__' arguments - {db_conn}")
+
         self._db_conn = db_conn
-        self._logger = getLogger()
+
+        self._logger.info(f"End   'CategoriesTable.__init__' returns - None")
+        return None
 
     def __str__(self) -> str:
         return "CategoriesTable"
@@ -64,6 +27,7 @@ class CategoriesTable:
     # ---------------------------------------------------------------------------------------------------------------------
     @function_logger
     def select_id_using_name(self, cat_name):
+        category_id = None
         sql = """
             select category_id
             from tro.categories
@@ -72,9 +36,6 @@ class CategoriesTable:
         with self._db_conn.cursor() as cursor:
             cursor.execute(sql, (cat_name,))
             results = cursor.fetchone()
-            # self._logger.debug(f"    {results=}")
-
-            category_id = None
             if results is not None:
                 category_id = results[0]
 
@@ -82,22 +43,7 @@ class CategoriesTable:
 
     # ---------------------------------------------------------------------------------------------------------------------
     @function_logger
-    def insert_name(self, name):
-        sql = """
-            insert into tro.categories
-            (category_name)
-            values (%s)
-        """
-        with self.db_conn.cursor() as cursor:
-            cursor.execute(sql, (name,))
-
-        category_id = self.select_by_name(name)
-
-        return category_id
-
-    # ---------------------------------------------------------------------------------------------------------------------
-    @function_logger
-    def insert_row(self, category_data):
+    def insert(self, category_data):
         sql = """
             insert into tro.categories
             (category_name, category_type_fk, category_group_fk)
@@ -112,24 +58,8 @@ class CategoriesTable:
                     category_data.category_group_fk,
                 ),
             )
-
-        return rc
-
-    # ---------------------------------------------------------------------------------------------------------------------
-    '''
-    @function_logger
-    def update_using_id(self, category_id, new_row):
-        sql = """
-            select * from tro.categories
-            where category_id = %s
-       """
-        with self.db_conn.cursor() as cursor:
-            cursor.execute(sql, (category_id,))
-            existing_row = CategoriesData(cursor.fetchone())
-
-            rc = self._update_using_row(existing_row)
-            return rc
-   '''
+        new_id = self.select_id_using_name(category_data.category_name)
+        return new_id
 
     # ---------------------------------------------------------------------------------------------------------------------
     @function_logger
@@ -141,7 +71,7 @@ class CategoriesTable:
         existing_row = None
         with self._db_conn.cursor() as cursor:
             cursor.execute(sql, (new_row.category_id,))
-            existing_row = CategoriesData(cursor.fetchone())
+            existing_row = CategoryData(cursor.fetchone())
             self._logger.debug(f"     {existing_row=}")
 
         perform_update = False
@@ -179,16 +109,20 @@ class CategoriesTable:
         return perform_update
 
     # ---------------------------------------------------------------------------------------------------------------------
+    @function_logger
     def delete_by_id(self, category_id):
         sql = """
             delete from tro.categories
             where category_id = %s
         """
-        with self.db_conn.cursor() as cursor:
+        with self._db_conn.cursor() as cursor:
             cursor.execute(sql, (category_id,))
             rows_deleted = cursor.rowcount
 
-        return rows_deleted
+            if rows_deleted == 1:
+                return True
+            else:
+                return False
 
     # ---------------------------------------------------------------------------------------------------------------------
     @function_logger
@@ -202,6 +136,7 @@ class CategoriesTable:
             cursor.execute(sql)
 
     # ---------------------------------------------------------------------------------------------------------------------
+    @function_logger
     def get_row_count(self):
         sql = """
             select count(*) from tro.categories;
